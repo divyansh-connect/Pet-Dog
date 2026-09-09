@@ -2,29 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
-  ShoppingBag,
+  Store,
   Package,
+  ShoppingBag,
   Layers,
   Users,
+  CreditCard,
+  Truck,
   Share2,
   MessageSquare,
-  MessageCircle,
   Star,
+  Target,
   Megaphone,
   BarChart3,
-  Plug,
   ShieldCheck,
-  CheckSquare,
+  Plug,
   History,
-  Bell,
   Settings,
-  Store,
   Menu,
   X,
   Search,
   ChevronDown,
   LogOut,
-  Sparkles
+  Sparkles,
+  Bell
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import ToastContainer from '../common/ToastContainer';
@@ -36,6 +37,7 @@ export default function AdminLayout() {
     logoutAdmin,
     currentRole,
     setCurrentRole,
+    rolesPermissions,
     notifications,
     markNotificationRead,
     showToast,
@@ -65,39 +67,36 @@ export default function AdminLayout() {
 
   const unreadNotifs = notifications.filter((n) => !n.read);
 
-  // Defined Navigation items
+  // Exact Requested Super Admin Navigation Flow
   const navItems = [
-    { name: 'Dashboard', path: '/admin', icon: LayoutDashboard, module: 'Dashboard' },
-    { name: 'Orders', path: '/admin/orders', icon: ShoppingBag, module: 'Orders' },
+    { name: 'Main Dashboard', path: '/admin', icon: LayoutDashboard, module: 'Main Dashboard' },
+    { name: 'Website / Store', path: '/admin/store', icon: Store, module: 'Website / Store' },
     { name: 'Products', path: '/admin/products', icon: Package, module: 'Products' },
+    { name: 'Orders', path: '/admin/orders', icon: ShoppingBag, module: 'Orders' },
     { name: 'Inventory', path: '/admin/inventory', icon: Layers, module: 'Inventory' },
-    { name: 'Customers CRM', path: '/admin/customers', icon: Users, module: 'Customers' },
+    { name: 'Customers / CRM', path: '/admin/customers', icon: Users, module: 'Customers / CRM' },
+    { name: 'Payments & Refunds', path: '/admin/payments', icon: CreditCard, module: 'Payments & Refunds' },
+    { name: 'Shipping & Tracking', path: '/admin/shipping', icon: Truck, module: 'Shipping & Tracking' },
     { name: 'Social Media', path: '/admin/social', icon: Share2, module: 'Social Media' },
-    { name: 'Unified Inbox', path: '/admin/messages', icon: MessageSquare, module: 'Messages' },
-    { name: 'Comments', path: '/admin/comments', icon: MessageCircle, module: 'Comments' },
-    { name: 'Reviews', path: '/admin/reviews', icon: Star, module: 'Reviews' },
+    { name: 'Unified Inbox', path: '/admin/inbox', icon: MessageSquare, module: 'Unified Inbox' },
+    { name: 'Comments & Reviews', path: '/admin/comments-reviews', icon: Star, module: 'Comments & Reviews' },
+    { name: 'Advertising', path: '/admin/advertising', icon: Target, module: 'Advertising' },
     { name: 'Marketing', path: '/admin/marketing', icon: Megaphone, module: 'Marketing' },
-    { name: 'Reports', path: '/admin/reports', icon: BarChart3, module: 'Reports' },
+    { name: 'Analytics & Reports', path: '/admin/analytics', icon: BarChart3, module: 'Analytics & Reports' },
+    { name: 'Staff / Roles & Permissions', path: '/admin/staff', icon: ShieldCheck, module: 'Staff / Roles & Permissions' },
     { name: 'Integrations', path: '/admin/integrations', icon: Plug, module: 'Integrations' },
-    { name: 'Staff & Roles', path: '/admin/staff', icon: ShieldCheck, module: 'Staff' },
-    { name: 'Approvals', path: '/admin/approvals', icon: CheckSquare, module: 'Approvals' },
-    { name: 'Activity Log', path: '/admin/activity', icon: History, module: 'Activity' },
-    { name: 'Notifications', path: '/admin/notifications', icon: Bell, module: 'Notifications' },
+    { name: 'Security & Activity Logs', path: '/admin/security', icon: History, module: 'Security & Activity Logs' },
     { name: 'Settings', path: '/admin/settings', icon: Settings, module: 'Settings' }
   ];
 
   const isModuleAllowed = (moduleName) => {
     if (currentRole === 'Super Admin') return true;
-    if (currentRole === 'Social Media Manager') {
-      return ['Dashboard', 'Social Media', 'Comments', 'Messages', 'Reviews', 'Notifications', 'Activity'].includes(moduleName);
+    const allowedList = rolesPermissions?.[currentRole];
+    if (allowedList && Array.isArray(allowedList)) {
+      if (allowedList.includes('*')) return true;
+      return allowedList.includes(moduleName);
     }
-    if (currentRole === 'Order Manager') {
-      return ['Dashboard', 'Orders', 'Customers', 'Messages', 'Notifications', 'Activity'].includes(moduleName);
-    }
-    if (currentRole === 'Inventory Manager') {
-      return ['Dashboard', 'Products', 'Inventory', 'Reports', 'Notifications', 'Activity'].includes(moduleName);
-    }
-    return true;
+    return false;
   };
 
   const activeNavItem = navItems.find((item) =>
@@ -362,24 +361,55 @@ export default function AdminLayout() {
               </button>
 
               {roleDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-3 z-50 space-y-3">
+                <div className="absolute right-0 mt-2 w-64 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-3 z-50 space-y-3">
                   <div className="border-b border-zinc-800 pb-2">
                     <div className="text-xs font-bold text-white">{adminUser.name}</div>
                     <div className="text-[10px] text-amber-400 font-semibold">{currentRole}</div>
                     <div className="text-[10px] text-zinc-500">{adminUser.email}</div>
                   </div>
 
-                  <button
-                    onClick={() => {
-                      logoutAdmin();
-                      navigate('/admin/login');
-                      setRoleDropdownOpen(false);
-                    }}
-                    className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-red-400 bg-red-950/40 hover:bg-red-900/60 border border-red-800/40 flex items-center gap-2 transition-colors"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span>Admin Sign Out</span>
-                  </button>
+                  <div className="space-y-1">
+                    <div className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider px-2">Switch Active Role (RBAC):</div>
+                    {[
+                      'Super Admin',
+                      'Admin',
+                      'Social Media Manager',
+                      'Inventory Manager',
+                      'Customer Support',
+                      'Marketing Manager'
+                    ].map((roleName) => (
+                      <button
+                        key={roleName}
+                        onClick={() => {
+                          setCurrentRole(roleName);
+                          showToast(`Switched active RBAC role to: ${roleName}`);
+                          setRoleDropdownOpen(false);
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center justify-between transition-colors ${
+                          currentRole === roleName
+                            ? 'bg-amber-400/20 text-amber-300 font-bold border border-amber-500/30'
+                            : 'text-zinc-300 hover:bg-zinc-800'
+                        }`}
+                      >
+                        <span>{roleName}</span>
+                        {currentRole === roleName && <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="border-t border-zinc-800 pt-2">
+                    <button
+                      onClick={() => {
+                        logoutAdmin();
+                        navigate('/admin/login');
+                        setRoleDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-red-400 bg-red-950/40 hover:bg-red-900/60 border border-red-800/40 flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Admin Sign Out</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

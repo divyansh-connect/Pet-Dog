@@ -22,26 +22,29 @@ import CustomerLogin from './pages/customer/CustomerLogin';
 import CustomerRegister from './pages/customer/CustomerRegister';
 import CustomerForgotPassword from './pages/customer/CustomerForgotPassword';
 
-// Admin Pages
+// 19-Module Super Admin Flow Pages
+import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
-import OrdersAdmin from './pages/admin/OrdersAdmin';
+import WebsiteAdmin from './pages/admin/WebsiteAdmin';
 import ProductsAdmin from './pages/admin/ProductsAdmin';
+import OrdersAdmin from './pages/admin/OrdersAdmin';
 import InventoryAdmin from './pages/admin/InventoryAdmin';
 import CustomersAdmin from './pages/admin/CustomersAdmin';
+import PaymentsAdmin from './pages/admin/PaymentsAdmin';
+import ShippingAdmin from './pages/admin/ShippingAdmin';
 import SocialAdmin from './pages/admin/SocialAdmin';
 import SocialCreatePost from './pages/admin/SocialCreatePost';
-import MessagesAdmin from './pages/admin/MessagesAdmin';
-import CommentsAdmin from './pages/admin/CommentsAdmin';
-import ReviewsAdmin from './pages/admin/ReviewsAdmin';
+import UnifiedInboxAdmin from './pages/admin/UnifiedInboxAdmin';
+import CommentsReviewsAdmin from './pages/admin/CommentsReviewsAdmin';
+import AdvertisingAdmin from './pages/admin/AdvertisingAdmin';
 import MarketingAdmin from './pages/admin/MarketingAdmin';
-import ReportsAdmin from './pages/admin/ReportsAdmin';
-import IntegrationsAdmin from './pages/admin/IntegrationsAdmin';
+import AnalyticsAdmin from './pages/admin/AnalyticsAdmin';
 import StaffAdmin from './pages/admin/StaffAdmin';
-import ApprovalsAdmin from './pages/admin/ApprovalsAdmin';
+import IntegrationsAdmin from './pages/admin/IntegrationsAdmin';
+import SecurityAdmin from './pages/admin/SecurityAdmin';
+import SettingsAdmin from './pages/admin/SettingsAdmin';
 import ActivityAdmin from './pages/admin/ActivityAdmin';
 import NotificationsAdmin from './pages/admin/NotificationsAdmin';
-import SettingsAdmin from './pages/admin/SettingsAdmin';
-import AdminLogin from './pages/admin/AdminLogin';
 
 export default function App() {
   return (
@@ -66,29 +69,32 @@ export default function App() {
             <Route path="account/forgot-password" element={<CustomerForgotPassword />} />
           </Route>
 
-          {/* Admin Login Standalone */}
+          {/* 1. Super Admin Login (Standalone Entry) */}
           <Route path="/admin/login" element={<AdminLogin />} />
 
-          {/* Central Admin Control Center */}
+          {/* Super Admin Central Control Center (Exact 19-Step Flow) */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
-            <Route path="orders" element={<OrdersAdmin />} />
+            <Route path="store" element={<WebsiteAdmin />} />
             <Route path="products" element={<ProductsAdmin />} />
+            <Route path="orders" element={<OrdersAdmin />} />
             <Route path="inventory" element={<InventoryAdmin />} />
             <Route path="customers" element={<CustomersAdmin />} />
+            <Route path="payments" element={<PaymentsAdmin />} />
+            <Route path="shipping" element={<ShippingAdmin />} />
             <Route path="social" element={<SocialAdmin />} />
             <Route path="social/create" element={<SocialCreatePost />} />
-            <Route path="messages" element={<MessagesAdmin />} />
-            <Route path="comments" element={<CommentsAdmin />} />
-            <Route path="reviews" element={<ReviewsAdmin />} />
+            <Route path="inbox" element={<UnifiedInboxAdmin />} />
+            <Route path="comments-reviews" element={<CommentsReviewsAdmin />} />
+            <Route path="advertising" element={<AdvertisingAdmin />} />
             <Route path="marketing" element={<MarketingAdmin />} />
-            <Route path="reports" element={<ReportsAdmin />} />
-            <Route path="integrations" element={<IntegrationsAdmin />} />
+            <Route path="analytics" element={<AnalyticsAdmin />} />
             <Route path="staff" element={<StaffAdmin />} />
-            <Route path="approvals" element={<ApprovalsAdmin />} />
+            <Route path="integrations" element={<IntegrationsAdmin />} />
+            <Route path="security" element={<SecurityAdmin />} />
+            <Route path="settings" element={<SettingsAdmin />} />
             <Route path="activity" element={<ActivityAdmin />} />
             <Route path="notifications" element={<NotificationsAdmin />} />
-            <Route path="settings" element={<SettingsAdmin />} />
           </Route>
         </Routes>
       </BrowserRouter>

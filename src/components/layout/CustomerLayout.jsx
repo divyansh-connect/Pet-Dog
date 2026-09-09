@@ -180,6 +180,36 @@ export default function CustomerLayout() {
               <div className="text-xs text-amber-400/80 font-mono">
                 Designed & Engineered for Pet Royalty.
               </div>
+
+              {/* PART 12 — Social Media Links (9 Platforms) */}
+              <div className="pt-2">
+                <div className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-2">Connect With Us</div>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { name: 'Instagram', label: 'IG', url: 'https://instagram.com/naran.petcare' },
+                    { name: 'Facebook', label: 'FB', url: 'https://facebook.com/naranpetcare' },
+                    { name: 'TikTok', label: 'TK', url: 'https://tiktok.com/@naranpetcare' },
+                    { name: 'YouTube', label: 'YT', url: 'https://youtube.com/@naranpetcare' },
+                    { name: 'Google Business', label: 'GB', url: 'https://business.google.com' },
+                    { name: 'Pinterest', label: 'PT', url: 'https://pinterest.com/naranpetcare' },
+                    { name: 'X (Twitter)', label: 'X', url: 'https://x.com/naranpetcare' },
+                    { name: 'Threads', label: 'TH', url: 'https://threads.net/@naran.petcare' },
+                    { name: 'LinkedIn', label: 'LN', url: 'https://linkedin.com/company/naranpetcare' },
+                    { name: 'WhatsApp Business', label: 'WA', url: 'https://wa.me/18005556272' }
+                  ].map((soc, idx) => (
+                    <a
+                      key={idx}
+                      href={soc.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`${soc.name} (Ready for API Connection)`}
+                      className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-amber-400 text-amber-400 text-xs font-bold flex items-center justify-center transition-all hover:scale-110 shadow-md"
+                    >
+                      {soc.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Quick Links */}

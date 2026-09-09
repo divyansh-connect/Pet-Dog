@@ -1,7 +1,7 @@
 export const initialProducts = [
   {
     id: "prod-1",
-    name: "CleanWalk™ Hands-Free Dog Waste Catcher",
+    name: "NARAN PETCARE CleanWalk™ Dog Waste Catcher",
     sku: "CW-100-BLK",
     category: "Equipment",
     price: 69.99,
@@ -12,15 +12,20 @@ export const initialProducts = [
       "/cleanwalk_hero.png",
       "/cleanwalk_product.png"
     ],
-    description: "The flagship luxury hands-free dog waste catcher engineered for effortless walks, sanitary waste collection, and total convenience.",
+    description: "The world's first wearable hands-free dog waste catcher that attaches securely to your dog's harness so waste falls directly into the biodegradable collection bag before touching the ground.",
     features: [
-      "Ergonomic one-handed spring release action",
-      "Aerospace-grade anodized aluminum & black ceramic housing",
-      "Universal leash clip attachment included",
-      "Odor-locking sealed internal cartridge",
-      "Waterproof & washable exterior"
+      "Hands-Free Walking",
+      "Leak-Proof & Odor Lock",
+      "Waterproof Inner Lining",
+      "Eco-Friendly Biodegradable Refill Bags",
+      "Comfortable Soft Harness Padding",
+      "Adjustable Waist Strap (S–XL)",
+      "Secure Drawstring Seal",
+      "Easy Replaceable Refill Cartridge",
+      "Cleaner Walks. Cleaner World."
     ],
-    sizes: ["S", "M", "L", "XL"],
+    sizes: ["Small (12–16\")", "Medium (16–22\")", "Large (22–28\")", "XL (28–38\")"],
+    colors: ["Royal Black", "Ocean Blue", "Sand Beige"],
     inventory: 85,
     lowStockThreshold: 15,
     status: "In Stock"
@@ -82,7 +87,7 @@ export const initialProducts = [
     rating: 5.0,
     reviewCount: 31,
     images: [
-      "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=800&q=80"
+      "/product_leash.jpg"
     ],
     description: "Handcrafted Tuscan full-grain leather leash featuring brass hardware and quick-attach mount for CleanWalk™.",
     features: [
@@ -105,7 +110,7 @@ export const initialProducts = [
     rating: 4.6,
     reviewCount: 22,
     images: [
-      "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=800&q=80"
+      "/product_care_kit.jpg"
     ],
     description: "Organic pet-safe sanitizing spray and microfiber polishing towel to keep your CleanWalk™ spotless.",
     features: [
@@ -128,7 +133,7 @@ export const initialProducts = [
     rating: 4.9,
     reviewCount: 67,
     images: [
-      "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80"
+      "/product_led.jpg"
     ],
     description: "High-output rechargeable LED spot lamp that mounts directly onto CleanWalk™ for night walks.",
     features: [
@@ -151,7 +156,7 @@ export const initialProducts = [
     rating: 4.8,
     reviewCount: 40,
     images: [
-      "https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&w=800&q=80"
+      "/product_jacket.jpg"
     ],
     description: "Waterproof windbreaker styled with dedicated magnet pockets for CleanWalk™ and accessories.",
     features: [
@@ -578,3 +583,41 @@ export const initialIntegrations = [
   { id: "integ-4", name: "TikTok Shop", category: "Social Commerce", icon: "Video", connected: false, lastSync: "Never" },
   { id: "integ-5", name: "Klaviyo Email & SMS", category: "Marketing", icon: "Mail", connected: true, lastSync: "10 mins ago" }
 ];
+
+export const initialSocialConnections = [
+  { id: "soc-1", platform: "Facebook", handle: "@naranpetcare", category: "Social", connected: true, syncStatus: "Synced", lastSynced: "10 mins ago", oauthEndpoint: "https://facebook.com/v18.0/dialog/oauth" },
+  { id: "soc-2", platform: "Instagram", handle: "@naran.petcare", category: "Social", connected: true, syncStatus: "Synced", lastSynced: "5 mins ago", oauthEndpoint: "https://api.instagram.com/oauth/authorize" },
+  { id: "soc-3", platform: "TikTok", handle: "@naranpetcare_official", category: "Video & Social", connected: true, syncStatus: "Synced", lastSynced: "25 mins ago", oauthEndpoint: "https://open-api.tiktok.com/platform/oauth/connect/" },
+  { id: "soc-4", platform: "YouTube", handle: "NARAN Petcare Official", category: "Video", connected: true, syncStatus: "Synced", lastSynced: "1 hour ago", oauthEndpoint: "https://accounts.google.com/o/oauth2/v2/auth" },
+  { id: "soc-5", platform: "Google Business", handle: "NARAN Petcare HQ", category: "Business", connected: true, syncStatus: "Synced", lastSynced: "2 hours ago", oauthEndpoint: "https://accounts.google.com/o/oauth2/v2/auth" },
+  { id: "soc-6", platform: "Google Ads", handle: "Act-882-990-1200", category: "Ads", connected: true, syncStatus: "Synced", lastSynced: "15 mins ago", oauthEndpoint: "https://accounts.google.com/o/oauth2/v2/auth" },
+  { id: "soc-7", platform: "Google Shopping", handle: "NARAN Merchant Center", category: "Commerce", connected: true, syncStatus: "Synced", lastSynced: "30 mins ago", oauthEndpoint: "https://accounts.google.com/o/oauth2/v2/auth" },
+  { id: "soc-8", platform: "Pinterest", handle: "@naranpetcare_design", category: "Social & Inspiration", connected: false, syncStatus: "Disconnected", lastSynced: "Never", oauthEndpoint: "https://www.pinterest.com/oauth/" },
+  { id: "soc-9", platform: "WhatsApp Business", handle: "+1 (800) 555-NARAN", category: "Messaging", connected: true, syncStatus: "Active Bot", lastSynced: "Just now", oauthEndpoint: "https://graph.facebook.com/v18.0/oauth" },
+  { id: "soc-10", platform: "LinkedIn", handle: "NARAN Petcare Inc.", category: "Corporate", connected: true, syncStatus: "Synced", lastSynced: "4 hours ago", oauthEndpoint: "https://www.linkedin.com/oauth/v2/authorization" },
+  { id: "soc-11", platform: "X (Twitter)", handle: "@naranpetcare", category: "Social & Support", connected: true, syncStatus: "Synced", lastSynced: "40 mins ago", oauthEndpoint: "https://twitter.com/i/oauth2/authorize" },
+  { id: "soc-12", platform: "Threads", handle: "@naran.petcare", category: "Social", connected: false, syncStatus: "Disconnected", lastSynced: "Never", oauthEndpoint: "https://threads.net/oauth/authorize" },
+  { id: "soc-13", platform: "Reddit", handle: "r/CleanWalkPet", category: "Community", connected: false, syncStatus: "Disconnected", lastSynced: "Never", oauthEndpoint: "https://www.reddit.com/api/v1/authorize" },
+  { id: "soc-14", platform: "Snapchat", handle: "naran_petcare", category: "Social & AR", connected: false, syncStatus: "Disconnected", lastSynced: "Never", oauthEndpoint: "https://accounts.snapchat.com/accounts/oauth2/approve" },
+  { id: "soc-15", platform: "Shopify", handle: "naran-petcare.myshopify.com", category: "E-Commerce", connected: true, syncStatus: "Live Sync", lastSynced: "2 mins ago", oauthEndpoint: "https://myshopify.com/admin/oauth/authorize" },
+  { id: "soc-16", platform: "Amazon", handle: "NARAN Direct Storefront", category: "Marketplace", connected: true, syncStatus: "Live Sync", lastSynced: "12 mins ago", oauthEndpoint: "https://sellercentral.amazon.com/apps/authorize" }
+];
+
+export const initialCoupons = [
+  { id: "coup-1", code: "CLEANWALK15", discount: "15% OFF", type: "Percentage", value: 15, usageLimit: 500, usedCount: 142, expiry: "2026-12-31", status: "Active" },
+  { id: "coup-2", code: "FREESHIP", discount: "Free Shipping", type: "Fixed Shipping", value: 15, usageLimit: 1000, usedCount: 380, expiry: "2026-10-15", status: "Active" },
+  { id: "coup-3", code: "VIPROYAL20", discount: "$20.00 OFF", type: "Fixed Amount", value: 20, usageLimit: 100, usedCount: 89, expiry: "2026-09-30", status: "Active" }
+];
+
+export const initialRefunds = [
+  { id: "ref-1", orderId: "NARAN-1020", customer: "Liam Hemsworth", amount: 69.99, reason: "Wrong Size Selected", date: "2026-09-04", status: "Pending Approval" },
+  { id: "ref-2", orderId: "NARAN-1015", customer: "Sophia Turner", amount: 19.99, reason: "Duplicate Order", date: "2026-09-02", status: "Refunded" }
+];
+
+export const initialLoginHistory = [
+  { id: "log-1", user: "Alexander Naran", role: "Super Admin", ip: "192.168.1.45", location: "New York, USA", timestamp: "2026-09-07 10:15:22", status: "Success", device: "Chrome on macOS" },
+  { id: "log-2", user: "Sarah Wilson", role: "Social Media Manager", ip: "192.168.1.88", location: "Los Angeles, USA", timestamp: "2026-09-07 09:40:11", status: "Success", device: "Safari on iOS" },
+  { id: "log-3", user: "Jessica Taylor", role: "Inventory Manager", ip: "10.0.0.12", location: "Chicago, USA", timestamp: "2026-09-06 18:22:05", status: "Success", device: "Firefox on Windows" },
+  { id: "log-4", user: "Unknown Attempt", role: "Admin", ip: "185.220.101.5", location: "Frankfurt, DE", timestamp: "2026-09-06 03:12:00", status: "Failed (2FA Required)", device: "Unknown Browser" }
+];
+

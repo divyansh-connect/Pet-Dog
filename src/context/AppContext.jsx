@@ -13,7 +13,11 @@ import {
   initialApprovals,
   initialActivityLogs,
   initialNotifications,
-  initialIntegrations
+  initialIntegrations,
+  initialSocialConnections,
+  initialCoupons,
+  initialRefunds,
+  initialLoginHistory
 } from '../data/initialData';
 
 const AppContext = createContext();
@@ -26,6 +30,10 @@ export function AppProvider({ children }) {
       if (!saved) return fallback;
       const parsed = JSON.parse(saved);
       const jsonString = JSON.stringify(parsed);
+      if (key === 'products' && jsonString.includes('unsplash.com')) {
+        localStorage.removeItem(`naran_${key}`);
+        return fallback;
+      }
       if (jsonString.includes('cleanwalk_hero_') || jsonString.includes('cleanwalk_product_')) {
         const cleaned = jsonString
           .replace(/\/cleanwalk_hero_[0-9]+\.png/g, '/cleanwalk_hero.png')
@@ -78,11 +86,36 @@ export function AppProvider({ children }) {
   const [activityLogs, setActivityLogs] = useState(() => loadState('activityLogs', initialActivityLogs));
   const [notifications, setNotifications] = useState(() => loadState('notifications', initialNotifications));
   const [integrations, setIntegrations] = useState(() => loadState('integrations', initialIntegrations));
+  const [socialConnections, setSocialConnections] = useState(() => loadState('socialConnections', initialSocialConnections));
+  const [coupons, setCoupons] = useState(() => loadState('coupons', initialCoupons));
+  const [refunds, setRefunds] = useState(() => loadState('refunds', initialRefunds));
+  const [loginHistory, setLoginHistory] = useState(() => loadState('loginHistory', initialLoginHistory));
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(() => loadState('twoFactorEnabled', false));
   
+  const defaultRolesPermissions = {
+    'Super Admin': ['*'],
+    'Social Media Manager': ['Main Dashboard', 'Social Media', 'Unified Inbox', 'Comments & Reviews', 'Analytics & Reports'],
+    'Order Manager': ['Main Dashboard', 'Orders', 'Customers / CRM', 'Shipping & Tracking', 'Payments & Refunds'],
+    'Inventory Manager': ['Main Dashboard', 'Products', 'Inventory', 'Analytics & Reports']
+  };
+  const [rolesPermissions, setRolesPermissions] = useState(() => loadState('rolesPermissions', defaultRolesPermissions));
   const [currentRole, setCurrentRole] = useState(() => loadState('currentRole', 'Super Admin'));
   const [toasts, setToasts] = useState([]);
 
   // Save changes to localStorage
+  useEffect(() => {
+    // Auto-update products images if any product image is pointing to unsplash
+    setProducts((prev) =>
+      prev.map((p) => {
+        const matchingInitial = initialProducts.find((ip) => ip.id === p.id);
+        if (matchingInitial && JSON.stringify(p.images).includes('unsplash')) {
+          return { ...p, images: matchingInitial.images };
+        }
+        return p;
+      })
+    );
+  }, []);
+
   useEffect(() => { localStorage.setItem('naran_customer_session', JSON.stringify(customerUser)); }, [customerUser]);
   useEffect(() => { localStorage.setItem('naran_admin_session', JSON.stringify(adminUser)); }, [adminUser]);
   useEffect(() => { localStorage.setItem('naran_products', JSON.stringify(products)); }, [products]);
@@ -99,6 +132,12 @@ export function AppProvider({ children }) {
   useEffect(() => { localStorage.setItem('naran_activityLogs', JSON.stringify(activityLogs)); }, [activityLogs]);
   useEffect(() => { localStorage.setItem('naran_notifications', JSON.stringify(notifications)); }, [notifications]);
   useEffect(() => { localStorage.setItem('naran_integrations', JSON.stringify(integrations)); }, [integrations]);
+  useEffect(() => { localStorage.setItem('naran_socialConnections', JSON.stringify(socialConnections)); }, [socialConnections]);
+  useEffect(() => { localStorage.setItem('naran_coupons', JSON.stringify(coupons)); }, [coupons]);
+  useEffect(() => { localStorage.setItem('naran_refunds', JSON.stringify(refunds)); }, [refunds]);
+  useEffect(() => { localStorage.setItem('naran_loginHistory', JSON.stringify(loginHistory)); }, [loginHistory]);
+  useEffect(() => { localStorage.setItem('naran_twoFactorEnabled', JSON.stringify(twoFactorEnabled)); }, [twoFactorEnabled]);
+  useEffect(() => { localStorage.setItem('naran_rolesPermissions', JSON.stringify(rolesPermissions)); }, [rolesPermissions]);
   useEffect(() => { localStorage.setItem('naran_currentRole', JSON.stringify(currentRole)); }, [currentRole]);
 
   // Toast Helper
@@ -595,6 +634,75 @@ export function AppProvider({ children }) {
     showToast('Thank you! Your message has been sent to our team.');
   };
 
+  const toggleSocialConnection = (connId) => {
+    setSocialConnections((prev) =>
+      prev.map((c) => {
+        if (c.id === connId) {
+          const nextState = !c.connected;
+          logActivity(
+            nextState ? 'Social Connection Connected' : 'Social Connection Disconnected',
+            'Social Connection Center',
+            `${nextState ? 'Connected' : 'Disconnected'} platform ${c.platform}.`
+          );
+          showToast(`${c.platform} connection ${nextState ? 'established via OAuth' : 'disconnected'}.`);
+          return {
+            ...c,
+            connected: nextState,
+            syncStatus: nextState ? 'Synced' : 'Disconnected',
+            lastSynced: nextState ? 'Just now' : 'Never'
+          };
+        }
+        return c;
+      })
+    );
+  };
+
+  const createCoupon = (couponData) => {
+    const newCoupon = {
+      id: `coup-${Date.now()}`,
+      usedCount: 0,
+      status: 'Active',
+      ...couponData
+    };
+    setCoupons((prev) => [newCoupon, ...prev]);
+    logActivity('Discount Code Created', 'Marketing', `Created coupon code "${couponData.code}".`);
+    showToast(`Coupon "${couponData.code}" created successfully.`);
+  };
+
+  const deleteCoupon = (couponId) => {
+    setCoupons((prev) => prev.filter((c) => c.id !== couponId));
+    logActivity('Discount Code Deleted', 'Marketing', `Deleted coupon ${couponId}.`);
+    showToast('Coupon removed.', 'info');
+  };
+
+  const approveRefund = (refundId) => {
+    setRefunds((prev) =>
+      prev.map((r) => (r.id === refundId ? { ...r, status: 'Refunded' } : r))
+    );
+    logActivity('Refund Approved', 'Returns & Refunds', `Approved refund request ${refundId}.`);
+    showToast('Refund processed successfully.');
+  };
+
+  const toggleTwoFactor = () => {
+    setTwoFactorEnabled((prev) => {
+      const next = !prev;
+      logActivity('2FA Status Changed', 'Security', `Two-Factor Authentication ${next ? 'enabled' : 'disabled'}.`);
+      showToast(`2FA is now ${next ? 'enabled' : 'disabled'}.`);
+      return next;
+    });
+  };
+
+  const markNotificationRead = (notifId) => {
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === notifId ? { ...n, read: true } : n))
+    );
+  };
+
+  const clearAllNotifications = () => {
+    setNotifications([]);
+    showToast('Notifications cleared.', 'info');
+  };
+
   const resetDemoData = () => {
     setCustomerUser(defaultCustomer);
     setAdminUser(defaultAdmin);
@@ -612,6 +720,11 @@ export function AppProvider({ children }) {
     setActivityLogs(initialActivityLogs);
     setNotifications(initialNotifications);
     setIntegrations(initialIntegrations);
+    setSocialConnections(initialSocialConnections);
+    setCoupons(initialCoupons);
+    setRefunds(initialRefunds);
+    setLoginHistory(initialLoginHistory);
+    setTwoFactorEnabled(false);
     setCurrentRole('Super Admin');
 
     localStorage.clear();
@@ -637,6 +750,12 @@ export function AppProvider({ children }) {
         activityLogs,
         notifications,
         integrations,
+        socialConnections,
+        coupons,
+        refunds,
+        loginHistory,
+        twoFactorEnabled,
+        rolesPermissions,
         currentRole,
         toasts,
         loginCustomer,
@@ -645,6 +764,15 @@ export function AppProvider({ children }) {
         loginAdmin,
         logoutAdmin,
         setCurrentRole,
+        setRolesPermissions,
+        updateRolePermissions: (roleName, modulesList) => {
+          setRolesPermissions((prev) => ({
+            ...prev,
+            [roleName]: modulesList
+          }));
+          logActivity('RBAC Updated', 'Staff & Permissions', `Updated permissions matrix for role: ${roleName}`);
+          showToast(`Permissions updated for ${roleName}`);
+        },
         showToast,
         removeToast,
         addToCart,
@@ -669,6 +797,13 @@ export function AppProvider({ children }) {
         approveRequest,
         rejectRequest,
         toggleIntegration,
+        toggleSocialConnection,
+        createCoupon,
+        deleteCoupon,
+        approveRefund,
+        toggleTwoFactor,
+        markNotificationRead,
+        clearAllNotifications,
         submitContactForm,
         resetDemoData,
         logActivity,
