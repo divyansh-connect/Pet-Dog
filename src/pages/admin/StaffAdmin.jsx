@@ -26,7 +26,14 @@ export default function StaffAdmin() {
     'Settings'
   ];
 
-  const configurableRoles = ['Social Media Manager', 'Order Manager', 'Inventory Manager'];
+  const configurableRoles = [
+    'Admin',
+    'Inventory Manager',
+    'Marketing Manager',
+    'Customer Support',
+    'Order Manager',
+    'Social Media Manager'
+  ];
 
   const handleToggleModulePermission = (role, moduleName) => {
     if (role === 'Super Admin') {

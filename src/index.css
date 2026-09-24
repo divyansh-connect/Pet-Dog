@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background-color: #09090b;
     color: #f4f4f5;
@@ -39,10 +42,81 @@
   background: linear-gradient(135deg, #E6C667 0%, #D4AF37 50%, #997010 100%);
 }
 
+.font-handwriting {
+  font-family: 'Caveat', 'Alex Brush', cursive;
+}
+
+.font-serif-naran {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.text-gold-accent {
+  color: #e5c158;
+}
+
+.border-gold-accent {
+  border-color: rgba(229, 193, 88, 0.5);
+}
+
 .border-gold {
   border-color: rgba(212, 175, 55, 0.4);
 }
 
 .gold-glow {
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+}
+
+/* 3D Floating Levitation Keyframe Animation */
+@keyframes float3D {
+  0% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(2deg) rotateY(-2deg) scale(1.02);
+    box-shadow: 0 25px 45px rgba(245, 158, 11, 0.25);
+  }
+  100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.animate-float-3d {
+  animation: float3D 5s ease-in-out infinite;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.box-3d-card {
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
+  transform: perspective(1000px) rotateY(-3deg) rotateX(2deg);
+}
+
+.box-3d-card:hover {
+  transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.04) translateY(-6px);
+  box-shadow: 0 20px 50px rgba(245, 158, 11, 0.35);
+}
+
+/* Remove 'Powered by Netlify' floating badge & watermark */
+#netlify-badge,
+.netlify-badge,
+[data-netlify-badge],
+[class*="netlify-badge"],
+[id*="netlify-badge"],
+iframe[src*="netlify"],
+a[href*="netlify.com"],
+a[href*="netlify.app"],
+[aria-label*="Netlify"],
+div:has(> a[href*="netlify"]),
+div:has(> img[alt*="Netlify"]) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
 }

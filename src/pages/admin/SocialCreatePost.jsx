@@ -8,7 +8,7 @@ export default function SocialCreatePost() {
   const navigate = useNavigate();
 
   const [caption, setCaption] = useState('');
-  const [image, setImage] = useState('/cleanwalk_hero.png');
+  const [image, setImage] = useState('/about_dog_main.jpg');
   const [selectedPlatforms, setSelectedPlatforms] = useState(['Instagram', 'TikTok']);
   const [scheduledFor, setScheduledFor] = useState('');
 

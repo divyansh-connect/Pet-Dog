@@ -12,6 +12,7 @@ import {
   Leaf,
   ChevronDown,
   ChevronUp,
+  ChevronRight,
   Package,
   RefreshCw,
   XCircle,
@@ -28,6 +29,11 @@ import {
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import Modal from '../../components/common/Modal';
+import FollowNaranPetcare from '../../components/common/FollowNaranPetcare';
+import ProductDesignCallouts from '../../components/common/ProductDesignCallouts';
+import DemoVideoModal from '../../components/common/DemoVideoModal';
+import RefillBagSystemSection from '../../components/common/RefillBagSystemSection';
+import WorksForAllDogsSection from '../../components/common/WorksForAllDogsSection';
 
 export default function HomePage() {
   const { products, addToCart, reviews } = useApp();
@@ -48,25 +54,25 @@ export default function HomePage() {
   const flagshipProduct = products.find((p) => p.id === 'prod-1') || products[0];
   const refillBagsProduct = products.find((p) => p.id === 'prod-2') || products[1];
 
-  // Color preview mapping with dedicated high-definition product variant photos
+  // Color preview mapping with dedicated high-definition product variant photos (Round Pouch Only)
   const colorPreviews = {
     'Royal Black': {
       border: 'border-zinc-700 hover:border-amber-400',
       bgGlow: 'from-zinc-950 via-zinc-900 to-black',
       badge: 'bg-zinc-800 text-amber-400 border-amber-500/40',
-      image: '/cleanwalk_hero.png'
+      image: '/cleanwalk_variant_black.png'
     },
     'Ocean Blue': {
       border: 'border-cyan-900/60 hover:border-cyan-400',
       bgGlow: 'from-slate-950 via-cyan-950/40 to-black',
       badge: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/40',
-      image: '/cleanwalk_blue.jpg'
+      image: '/cleanwalk_variant_blue.png'
     },
     'Sand Beige': {
       border: 'border-amber-900/60 hover:border-yellow-300',
       bgGlow: 'from-amber-950/40 via-stone-900 to-black',
       badge: 'bg-amber-950/80 text-amber-200 border-yellow-500/40',
-      image: '/cleanwalk_beige.jpg'
+      image: '/cleanwalk_variant_beige.png'
     }
   };
 
@@ -199,11 +205,13 @@ export default function HomePage() {
                   muted
                   loop
                   playsInline
-                  controls={false}
-                  preload="metadata"
+                  controls
+                  preload="auto"
                   poster="/cleanwalk_hero.png"
                   className="w-full h-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700"
                 >
+                  <source src="/cleanwalk_demo_optimized.webm" type="video/webm" />
+                  <source src="/cleanwalk_demo_optimized.mp4" type="video/mp4" />
                   <source src="/cleanwalk_demo.mp4" type="video/mp4" />
                   Your browser does not support HTML5 video.
                 </video>
@@ -237,7 +245,7 @@ export default function HomePage() {
 
 
       {/* PART 3 — New "How CleanWalk Works" Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
             <Dog className="w-3.5 h-3.5" />
@@ -256,32 +264,32 @@ export default function HomePage() {
               title: 'Wear',
               desc: 'Place the harness comfortably on the dog.',
               icon: Dog,
-              img: '/cleanwalk_product.png',
-              fallback: '/cleanwalk_product.png'
+              img: '/rear_view_harness.jpg',
+              fallback: '/rear_view_harness.jpg'
             },
             {
               step: 'Step 2',
               title: 'Catch',
               desc: 'When the dog bends to poop, waste falls directly into the catcher bag.',
               icon: Droplets,
-              img: '/cleanwalk_hero.png',
-              fallback: '/cleanwalk_hero.png'
+              img: '/step2_catch.jpg',
+              fallback: '/step2_catch.jpg'
             },
             {
               step: 'Step 3',
               title: 'Close',
               desc: 'Pull the drawstring and seal the bag.',
               icon: Lock,
-              img: '/cleanwalk_cartridge.png',
-              fallback: '/cleanwalk_cartridge.png'
+              img: '/step3_close.jpg',
+              fallback: '/step3_close.jpg'
             },
             {
               step: 'Step 4',
               title: 'Remove & Dispose',
               desc: 'Remove the biodegradable bag and dispose responsibly.',
               icon: Leaf,
-              img: '/cleanwalk_bags.png',
-              fallback: '/cleanwalk_bags.png'
+              img: '/step3_close.jpg',
+              fallback: '/step3_close.jpg'
             }
           ].map((item, idx) => (
             <div
@@ -298,217 +306,19 @@ export default function HomePage() {
 
               <div className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-1">{item.step}</div>
               <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed mb-6">{item.desc}</p>
-
-              <div className="w-full h-36 rounded-xl overflow-hidden border border-zinc-800 bg-zinc-900">
-                <img
-                  src={item.img}
-                  alt={item.title}
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = item.fallback;
-                  }}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
 
-      {/* PART 4 — Dedicated Product Design Section (Updated Client Spec) */}
-      <section className="relative bg-zinc-950 border-y border-zinc-900 py-24 overflow-hidden">
-        {/* Background glow elements */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          {/* Header */}
-          <div className="text-center max-w-2xl mx-auto mb-20 space-y-3">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>OFFICIAL PRODUCT ARCHITECTURE</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-serif font-extrabold text-white">Product Design Callouts</h2>
-            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-light">
-              Explore the anatomical engineering behind the world's first hands-free wearable dog waste catcher.
-            </p>
-          </div>
-
-          {/* 3-Column Layout: Left (3 cards) | Center (Large Harness Graphic) | Right (3 cards) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Side Features (3 Cards) */}
-            <div className="lg:col-span-4 space-y-8">
-              {[
-                {
-                  title: 'Adjustable Waist Strap',
-                  desc: 'Heavy-duty quick-release buckle providing customized fit from S to XL.',
-                  icon: Sliders
-                },
-                {
-                  title: 'Soft Breathable Padding',
-                  desc: 'Multi-layer ergonomic air mesh preventing chafing and heat buildup.',
-                  icon: ShieldCheck
-                },
-                {
-                  title: 'Waterproof Inner Lining',
-                  desc: '20-micron sealed barrier ensuring complete liquid and stain resistance.',
-                  icon: Droplets
-                }
-              ].map((feat, idx) => (
-                <div
-                  key={idx}
-                  className="group relative bg-zinc-900/80 border border-amber-500/30 hover:border-amber-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_rgba(245,158,11,0.25)] hover:-translate-y-1"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-xl bg-amber-400/10 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-110 transition-transform">
-                      <feat.icon className="w-5 h-5" />
-                    </div>
-                    <div className="space-y-1">
-                      <h3 className="text-base font-bold text-white group-hover:text-amber-300 transition-colors">
-                        {feat.title}
-                      </h3>
-                      <p className="text-xs text-zinc-400 leading-relaxed font-light">
-                        {feat.desc}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Desktop Thin Gold Connector Line (Left to Center) */}
-                  <div className="hidden lg:flex items-center absolute -right-8 top-1/2 -translate-y-1/2 w-8 pointer-events-none">
-                    <div className="w-full h-[1px] bg-gradient-to-r from-amber-400 to-amber-500/20" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 shadow-[0_0_8px_#f59e0b]" />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Center Product Image (Large NARAN PETCARE CleanWalk™ Harness) */}
-            <div className="lg:col-span-4 flex justify-center relative my-4 lg:my-0">
-              <div className="relative group">
-                {/* Glowing Aura Ring */}
-                <div className="absolute -inset-4 rounded-full bg-amber-500/20 blur-2xl group-hover:opacity-80 transition-opacity duration-500" />
-
-                <div className="relative bg-zinc-900/90 border border-amber-500/40 rounded-3xl p-6 shadow-2xl group-hover:border-amber-400 transition-colors">
-                  <img
-                    src="/cleanwalk_product.png"
-                    alt="NARAN PETCARE CleanWalk™ Official Product Design"
-                    className="w-full max-w-xs sm:max-w-sm h-auto object-contain rounded-2xl group-hover:scale-105 transition-transform duration-700 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]"
-                  />
-                  <div className="mt-4 text-center">
-                    <span className="inline-block px-3 py-1 rounded-full bg-amber-400/10 border border-amber-500/40 text-amber-300 text-[11px] font-extrabold uppercase tracking-wider">
-                      CleanWalk™ Patent Design
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Side Features (3 Cards) */}
-            <div className="lg:col-span-4 space-y-8">
-              {[
-                {
-                  title: 'Tail Opening',
-                  desc: 'Anatomically contoured slot allowing natural tail position and movement.',
-                  icon: Dog
-                },
-                {
-                  title: 'Secure Drawstring Seal',
-                  desc: 'High-tension cord lock that instantly traps odor and seals bag tight.',
-                  icon: Lock
-                },
-                {
-                  title: 'Leak-Proof Collection Pouch',
-                  desc: 'Double-walled collection chamber keeping waste locked until disposal.',
-                  icon: Package
-                }
-              ].map((feat, idx) => (
-                <div
-                  key={idx}
-                  className="group relative bg-zinc-900/80 border border-amber-500/30 hover:border-amber-400 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_25px_rgba(245,158,11,0.25)] hover:-translate-y-1"
-                >
-                  {/* Desktop Thin Gold Connector Line (Center to Right) */}
-                  <div className="hidden lg:flex items-center absolute -left-8 top-1/2 -translate-y-1/2 w-8 pointer-events-none">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 shadow-[0_0_8px_#f59e0b]" />
-                    <div className="w-full h-[1px] bg-gradient-to-r from-amber-500/20 to-amber-400" />
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-xl bg-amber-400/10 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-110 transition-transform">
-                      <feat.icon className="w-5 h-5" />
-                    </div>
-                    <div className="space-y-1">
-                      <h3 className="text-base font-bold text-white group-hover:text-amber-300 transition-colors">
-                        {feat.title}
-                      </h3>
-                      <p className="text-xs text-zinc-400 leading-relaxed font-light">
-                        {feat.desc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-          </div>
-        </div>
-      </section>
+      {/* PART 4 — Dedicated Product Design Section (SECOND Reference Design) */}
+      <ProductDesignCallouts />
 
 
       {/* PART 5 — Refill Bag System */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest">
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span>ECO REFILL SYSTEM</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-serif font-extrabold text-white">Refill Bag System</h2>
-          <p className="text-xs sm:text-sm text-zinc-400">
-            Swap rolls in under 5 seconds with zero hassle or microplastic footprint.
-          </p>
-        </div>
-
-        {/* 4 Visual Steps */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {[
-            { num: '1', title: 'Open Pouch', desc: 'Unclip magnetic latch on housing pouch.' },
-            { num: '2', title: 'Remove Used Bag', desc: 'Tie drawstring and extract sealed compostable bag.' },
-            { num: '3', title: 'Insert Refill Roll', desc: 'Drop in fresh CleanWalk™ 100% plant-based roll.' },
-            { num: '4', title: 'Close Pouch', desc: 'Latch shut and feed top lead through dispenser slot.' }
-          ].map((st, idx) => (
-            <div key={idx} className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-6 text-center space-y-3 hover:border-amber-400/40 transition-colors">
-              <div className="w-10 h-10 rounded-full bg-amber-400 text-black font-extrabold text-sm flex items-center justify-center mx-auto shadow-md">
-                {st.num}
-              </div>
-              <h4 className="text-base font-bold text-white">{st.title}</h4>
-              <p className="text-xs text-zinc-400 leading-relaxed">{st.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Refill Bag Product Card */}
-        <div className="bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border border-amber-500/30 rounded-3xl p-8 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div className="space-y-4">
-            <div className="inline-block px-3 py-1 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold">
-              100% Certified Plant-Based
-            </div>
-            <h3 className="text-2xl font-serif font-bold text-white">{refillBagsProduct.name}</h3>
-            <p className="text-xs text-zinc-300 leading-relaxed">{refillBagsProduct.description}</p>
-            <div className="text-2xl font-extrabold text-amber-400">${refillBagsProduct.price} <span className="text-xs text-zinc-500 line-through">${refillBagsProduct.comparePrice}</span></div>
-            <button
-              onClick={() => addToCart(refillBagsProduct, 'Standard', 1)}
-              className="px-6 py-3 bg-amber-400 text-black text-xs font-extrabold rounded-xl hover:bg-amber-300 transition-colors shadow-lg"
-            >
-              Add Refill 3-Pack to Cart
-            </button>
-          </div>
-          <div className="flex justify-center">
-            <img src="/cleanwalk_bags.png" alt="Refill Bags" className="w-64 h-64 object-contain rounded-2xl border border-zinc-800" />
-          </div>
-        </div>
-      </section>
+      <RefillBagSystemSection />
 
 
       {/* PART 6 & PART 7 — Interactive Size Selector & Color Variants */}
@@ -527,9 +337,10 @@ export default function HomePage() {
                 </div>
 
                 <img
+                  key={selectedColor}
                   src={colorPreviews[selectedColor].image}
                   alt={selectedColor}
-                  className="w-full h-72 object-contain mx-auto rounded-2xl transition-all duration-500"
+                  className="w-full h-80 sm:h-[340px] object-contain mx-auto rounded-2xl transition-all duration-500 drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)]"
                 />
 
                 <div className="mt-6 pt-4 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-300">
@@ -660,22 +471,22 @@ export default function HomePage() {
             <div className="bg-zinc-900/90 border border-amber-500/30 rounded-2xl p-4 text-center hover:border-amber-400 transition-all hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] group">
               <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center border border-zinc-800">
                 <img
-                  src="/cleanwalk_hero.png"
+                  src="/cleanwalk_packaging_box.png"
                   alt="Closed Matte-Black Gift Box"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="mt-3 text-xs font-bold text-white">Matte-Black Gift Box</div>
               <div className="text-[10px] text-amber-400/80">Gold Foil Embossed Box</div>
             </div>
 
-            {/* Box 2: Open Gift Box with Harness */}
+            {/* Box 2: CleanWalk Harness */}
             <div className="bg-zinc-900/90 border border-amber-500/30 rounded-2xl p-4 text-center hover:border-amber-400 transition-all hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] group">
               <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center border border-zinc-800">
                 <img
-                  src="/cleanwalk_product.png"
-                  alt="CleanWalk Harness Inside"
-                  className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                  src="/rear_view_harness.jpg"
+                  alt="CleanWalk Harness"
+                  className="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="mt-3 text-xs font-bold text-white">CleanWalk™ Harness</div>
@@ -686,9 +497,9 @@ export default function HomePage() {
             <div className="bg-zinc-900/90 border border-amber-500/30 rounded-2xl p-4 text-center hover:border-amber-400 transition-all hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] group">
               <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center border border-zinc-800">
                 <img
-                  src="/cleanwalk_bags.png"
+                  src="/cleanwalk_real_refill_roll.png"
                   alt="Two Biodegradable Refill Rolls"
-                  className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain p-1 group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
               <div className="mt-3 text-xs font-bold text-white">2 Refill Bag Rolls</div>
@@ -699,13 +510,13 @@ export default function HomePage() {
             <div className="bg-zinc-900/90 border border-amber-500/30 rounded-2xl p-4 text-center hover:border-amber-400 transition-all hover:shadow-[0_0_20px_rgba(245,158,11,0.2)] group">
               <div className="w-full h-36 rounded-xl overflow-hidden bg-black flex items-center justify-center border border-zinc-800">
                 <img
-                  src="/cleanwalk_cartridge.png"
+                  src="/step3_close.jpg"
                   alt="Storage Carry Pouch & Cartridge"
-                  className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="mt-3 text-xs font-bold text-white">Storage Carry Pouch</div>
-              <div className="text-[10px] text-amber-400/80">Magnetic Quick Cartridge</div>
+              <div className="text-[10px] text-amber-400/80">Odor-Lock Seal Pouch</div>
             </div>
           </div>
 
@@ -781,7 +592,7 @@ export default function HomePage() {
               <div className="space-y-3 text-xs text-zinc-200">
                 {[
                   "Dog wears the CleanWalk harness.",
-                  "Dog bends to poop.",
+                  "Dog moves naturally while wearing CleanWalk™.",
                   "Waste drops directly into the CleanWalk biodegradable catcher bag.",
                   "Waste never touches the ground.",
                   "Hands-free walking.",
@@ -901,6 +712,8 @@ export default function HomePage() {
         )}
       </section>
 
+      {/* FOLLOW NARAN PETCARE Official Social Media Section */}
+      <FollowNaranPetcare />
 
       {/* PART 11 — Expandable FAQ Accordion */}
       <section className="bg-zinc-950 border-y border-zinc-900 py-20">
@@ -942,37 +755,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Works for All Dogs Section */}
+      <WorksForAllDogsSection />
 
-      {/* Demo Video Modal */}
-      <Modal isOpen={demoVideoOpen} onClose={() => setDemoVideoOpen(false)} title="CleanWalk™ Demonstration Video">
-        <div className="space-y-4">
-          <div className="relative aspect-video bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 flex items-center justify-center group">
-            <video
-              autoPlay
-              muted
-              loop
-              controls
-              className="w-full h-full object-cover"
-              poster="/cleanwalk_hero.png"
-            >
-              <source src="/cleanwalk_demo.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <div className="text-xs text-zinc-400 leading-relaxed">
-            <span className="text-amber-400 font-bold">Interactive Demo:</span> CleanWalk™ demonstrates automatic bag feeding, odor-sealed closure, and fast magnetic cartridge swaps in real-world walking conditions.
-          </div>
-          <button
-            onClick={() => {
-              setDemoVideoOpen(false);
-              navigate('/shop');
-            }}
-            className="w-full py-3 bg-amber-400 text-black font-bold text-xs rounded-xl hover:bg-amber-300 transition-colors cursor-pointer"
-          >
-            Explore CleanWalk Specifications
-          </button>
-        </div>
-      </Modal>
-
+      {/* Step-by-Step Usage Demo Video Popup Modal */}
+      <DemoVideoModal isOpen={demoVideoOpen} onClose={() => setDemoVideoOpen(false)} />
     </div>
   );
 }

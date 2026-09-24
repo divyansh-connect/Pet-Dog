@@ -68,6 +68,31 @@ export default function ShopPage() {
         </div>
       </div>
 
+      {/* Luxury Product Visual Banner */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 p-6 rounded-3xl border border-amber-500/30 shadow-2xl">
+        <div className="relative group overflow-hidden rounded-2xl border border-zinc-800 bg-black h-48 shadow-lg">
+          <img
+            src="/cleanwalk_real_gift_box.png"
+            alt="CleanWalk Luxury Gift Set & Velvet Pouch"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute bottom-3 left-3 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-amber-400 border border-amber-500/30">
+            LUXURY GIFT BOX & VELVET BAG
+          </div>
+        </div>
+
+        <div className="relative group overflow-hidden rounded-2xl border border-zinc-800 bg-black h-48 shadow-lg">
+          <img
+            src="/cleanwalk_real_refill_roll.png"
+            alt="Plant-Based Refill Bag Roll"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute bottom-3 left-3 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-amber-400 border border-amber-500/30">
+            100% PLANT-BASED BAG ROLL
+          </div>
+        </div>
+      </div>
+
       {/* Main Grid + Filter Sidebar */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Filters Sidebar */}
@@ -181,8 +206,12 @@ export default function ShopPage() {
                     className="relative aspect-square bg-zinc-950 overflow-hidden cursor-pointer"
                   >
                     <img
-                      src={product.images[0]}
+                      src={(product.images && product.images[0]) || '/cleanwalk_variant_black.png'}
                       alt={product.name}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = '/cleanwalk_variant_black.png';
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute top-3 left-3 bg-zinc-950/80 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] text-amber-400 font-bold border border-zinc-800">

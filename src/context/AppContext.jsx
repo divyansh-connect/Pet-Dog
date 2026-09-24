@@ -26,20 +26,10 @@ export function AppProvider({ children }) {
   // Helper to load or fallback to initial
   const loadState = (key, fallback) => {
     try {
-      const saved = localStorage.getItem(`naran_${key}`);
+      const storageKey = key === 'products' ? 'naran_products_v4' : `naran_${key}`;
+      const saved = localStorage.getItem(storageKey);
       if (!saved) return fallback;
       const parsed = JSON.parse(saved);
-      const jsonString = JSON.stringify(parsed);
-      if (key === 'products' && jsonString.includes('unsplash.com')) {
-        localStorage.removeItem(`naran_${key}`);
-        return fallback;
-      }
-      if (jsonString.includes('cleanwalk_hero_') || jsonString.includes('cleanwalk_product_')) {
-        const cleaned = jsonString
-          .replace(/\/cleanwalk_hero_[0-9]+\.png/g, '/cleanwalk_hero.png')
-          .replace(/\/cleanwalk_product_[0-9]+\.png/g, '/cleanwalk_product.png');
-        return JSON.parse(cleaned);
-      }
       return parsed;
     } catch (e) {
       console.error(`Error loading state for ${key}`, e);
@@ -94,31 +84,36 @@ export function AppProvider({ children }) {
   
   const defaultRolesPermissions = {
     'Super Admin': ['*'],
-    'Social Media Manager': ['Main Dashboard', 'Social Media', 'Unified Inbox', 'Comments & Reviews', 'Analytics & Reports'],
-    'Order Manager': ['Main Dashboard', 'Orders', 'Customers / CRM', 'Shipping & Tracking', 'Payments & Refunds'],
-    'Inventory Manager': ['Main Dashboard', 'Products', 'Inventory', 'Analytics & Reports']
+    'Admin': ['*'],
+    'Inventory Manager': ['Main Dashboard', 'Products', 'Inventory', 'Analytics & Reports', 'Website / Store'],
+    'Marketing Manager': ['Main Dashboard', 'Products', 'Marketing', 'Advertising', 'Social Media', 'Analytics & Reports', 'Website / Store', 'Comments & Reviews'],
+    'Customer Support': ['Main Dashboard', 'Products', 'Orders', 'Customers / CRM', 'Unified Inbox', 'Comments & Reviews', 'Shipping & Tracking', 'Payments & Refunds'],
+    'Social Media Manager': ['Main Dashboard', 'Products', 'Social Media', 'Unified Inbox', 'Comments & Reviews', 'Analytics & Reports'],
+    'Order Manager': ['Main Dashboard', 'Products', 'Orders', 'Customers / CRM', 'Shipping & Tracking', 'Payments & Refunds']
   };
-  const [rolesPermissions, setRolesPermissions] = useState(() => loadState('rolesPermissions', defaultRolesPermissions));
+  const [rolesPermissions, setRolesPermissions] = useState(() => {
+    const saved = loadState('rolesPermissions', defaultRolesPermissions);
+    return { ...defaultRolesPermissions, ...saved };
+  });
   const [currentRole, setCurrentRole] = useState(() => loadState('currentRole', 'Super Admin'));
   const [toasts, setToasts] = useState([]);
 
   // Save changes to localStorage
   useEffect(() => {
-    // Auto-update products images if any product image is pointing to unsplash
-    setProducts((prev) =>
-      prev.map((p) => {
-        const matchingInitial = initialProducts.find((ip) => ip.id === p.id);
-        if (matchingInitial && JSON.stringify(p.images).includes('unsplash')) {
-          return { ...p, images: matchingInitial.images };
-        }
-        return p;
-      })
+    // Always sync products list and images from initialProducts to keep catalog clean
+    setProducts(initialProducts);
+    setSocialPosts((prev) =>
+      prev.map((p) =>
+        p.id === 'post-1' && (p.image === '/cleanwalk_hero.png' || p.image === '/rear_view_harness.jpg')
+          ? { ...p, image: '/about_dog_main.jpg' }
+          : p
+      )
     );
   }, []);
 
   useEffect(() => { localStorage.setItem('naran_customer_session', JSON.stringify(customerUser)); }, [customerUser]);
   useEffect(() => { localStorage.setItem('naran_admin_session', JSON.stringify(adminUser)); }, [adminUser]);
-  useEffect(() => { localStorage.setItem('naran_products', JSON.stringify(products)); }, [products]);
+  useEffect(() => { localStorage.setItem('naran_products_v3', JSON.stringify(products)); }, [products]);
   useEffect(() => { localStorage.setItem('naran_orders', JSON.stringify(orders)); }, [orders]);
   useEffect(() => { localStorage.setItem('naran_customers', JSON.stringify(customers)); }, [customers]);
   useEffect(() => { localStorage.setItem('naran_cart', JSON.stringify(cart)); }, [cart]);

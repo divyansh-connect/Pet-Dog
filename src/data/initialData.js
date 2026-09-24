@@ -9,10 +9,10 @@ export const initialProducts = [
     rating: 4.9,
     reviewCount: 142,
     images: [
-      "/cleanwalk_hero.png",
-      "/cleanwalk_product.png"
+      "/cleanwalk_variant_black.png",
+      "/cleanwalk_real_harness.png"
     ],
-    description: "The world's first wearable hands-free dog waste catcher that attaches securely to your dog's harness so waste falls directly into the biodegradable collection bag before touching the ground.",
+    description: "The flagship luxury hands-free dog waste catcher engineered with black leather housing, gold accents, magnetic flap, and zero-touch spring release.",
     features: [
       "Hands-Free Walking",
       "Leak-Proof & Odor Lock",
@@ -21,7 +21,6 @@ export const initialProducts = [
       "Comfortable Soft Harness Padding",
       "Adjustable Waist Strap (S–XL)",
       "Secure Drawstring Seal",
-      "Easy Replaceable Refill Cartridge",
       "Cleaner Walks. Cleaner World."
     ],
     sizes: ["Small (12–16\")", "Medium (16–22\")", "Large (22–28\")", "XL (28–38\")"],
@@ -32,22 +31,22 @@ export const initialProducts = [
   },
   {
     id: "prod-2",
-    name: "CleanWalk™ Compostable Waste Bags (3-Pack)",
-    sku: "CW-BG-300",
+    name: "NARAN PETCARE 60-Pack Biodegradable Refill Bags Box",
+    sku: "CW-BG-60",
     category: "Accessories",
-    price: 19.99,
-    comparePrice: 24.99,
-    rating: 4.8,
-    reviewCount: 98,
+    price: 24.99,
+    comparePrice: 29.99,
+    rating: 4.9,
+    reviewCount: 118,
     images: [
-      "/cleanwalk_bags.png"
+      "/cleanwalk_real_refill_box.png"
     ],
-    description: "100% plant-based certified compostable waste refill bags specially designed for CleanWalk™ automatic loading mechanism.",
+    description: "60-pack plant-based biodegradable & compostable waste refill bags in luxury black box with gold foil branding. 100% leak proof and odor lock.",
     features: [
+      "Biodegradable & Compostable (PLA + PBAT)",
       "Extra thick 20-micron leakproof seal",
-      "Unscented natural cornstarch material",
-      "180 bags per 3-pack (6-month supply)",
-      "Standard fit for CleanWalk™ cartridge"
+      "Odor lock magnetic pouch fit",
+      "60 bags per box (2-month supply)"
     ],
     sizes: ["Standard"],
     inventory: 240,
@@ -56,136 +55,91 @@ export const initialProducts = [
   },
   {
     id: "prod-3",
-    name: "CleanWalk™ Quick-Reload Cartridge",
-    sku: "CW-CRT-01",
+    name: "NARAN PETCARE Plant-Based Refill Bag Roll (20 Bags)",
+    sku: "CW-BG-ROLL",
     category: "Accessories",
-    price: 14.99,
-    comparePrice: 17.99,
-    rating: 4.7,
-    reviewCount: 54,
+    price: 8.99,
+    comparePrice: 10.99,
+    rating: 4.8,
+    reviewCount: 76,
     images: [
-      "/cleanwalk_cartridge.png"
+      "/cleanwalk_real_refill_roll.png"
     ],
-    description: "Magnetically locking bag cartridge allowing sub-3 second bag reloads on the go.",
+    description: "Certified 100% plant-based PLA+PBAT biodegradable waste bag roll printed with gold NARAN crown & paw logo for CleanWalk™ pouch.",
     features: [
-      "Neodymium magnetic snap locking",
-      "Ultra lightweight matte alloy structure",
-      "Prevents bag unravelling"
+      "Easy tear-off perforated rolls",
+      "20 bags per roll",
+      "Odor locking & extra thick"
     ],
     sizes: ["Standard"],
-    inventory: 8,
-    lowStockThreshold: 10,
-    status: "Low Stock"
+    inventory: 150,
+    lowStockThreshold: 20,
+    status: "In Stock"
   },
   {
     id: "prod-4",
-    name: "NARAN Luxury Italian Leather Leash Set",
-    sku: "NR-LSH-LTH",
-    category: "Leashes & Harnesses",
+    name: "NARAN PETCARE CleanWalk™ Luxury Packaging Box Set",
+    sku: "CW-BOX-LUX",
+    category: "Bundles",
     price: 89.99,
     comparePrice: 110.00,
     rating: 5.0,
-    reviewCount: 31,
+    reviewCount: 64,
     images: [
-      "/product_leash.jpg"
+      "/cleanwalk_real_gift_box.png"
     ],
-    description: "Handcrafted Tuscan full-grain leather leash featuring brass hardware and quick-attach mount for CleanWalk™.",
+    description: "Luxury Black Packaging Box with Gold Foil Logo (28x20x12 cm). Includes Harness, Waste Pouch, Biodegradable Bags Roll, and Instruction Manual.",
     features: [
-      "Full-grain veg-tanned leather",
-      "24k gold-plated brass carabiner",
-      "Padded neoprene handle interior"
+      "Luxury rigid box with gold foil embossing",
+      "Includes full CleanWalk™ V1.0 kit",
+      "Perfect premium gift packaging"
     ],
-    sizes: ["M", "L"],
-    inventory: 18,
-    lowStockThreshold: 5,
+    sizes: ["Standard"],
+    inventory: 40,
+    lowStockThreshold: 10,
     status: "In Stock"
   },
   {
     id: "prod-5",
-    name: "CleanWalk™ Sanitizing Care & Polish Kit",
-    sku: "CW-KIT-SAN",
-    category: "Care",
-    price: 24.99,
-    comparePrice: 29.99,
-    rating: 4.6,
-    reviewCount: 22,
-    images: [
-      "/product_care_kit.jpg"
-    ],
-    description: "Organic pet-safe sanitizing spray and microfiber polishing towel to keep your CleanWalk™ spotless.",
-    features: [
-      "Enzyme-based odor neutralizer",
-      "Hypoallergenic and pet safe",
-      "Includes plush microfiber cloth"
-    ],
-    sizes: ["Standard"],
-    inventory: 45,
-    lowStockThreshold: 10,
-    status: "In Stock"
-  },
-  {
-    id: "prod-6",
-    name: "NARAN Night-Vision LED Leash Attachment",
-    sku: "NR-ACC-LED",
+    name: "NARAN PETCARE Velvet Travel & Carrying Pouch",
+    sku: "CW-POUCH-VLV",
     category: "Accessories",
-    price: 29.99,
-    comparePrice: 34.99,
+    price: 14.99,
+    comparePrice: 19.99,
     rating: 4.9,
-    reviewCount: 67,
+    reviewCount: 42,
     images: [
-      "/product_led.jpg"
+      "/cleanwalk_real_velvet_pouch.png"
     ],
-    description: "High-output rechargeable LED spot lamp that mounts directly onto CleanWalk™ for night walks.",
+    description: "Luxury black velvet drawstring carrying pouch featuring gold embroidered Naran crown logo for storing CleanWalk™ refills & accessories on the go.",
     features: [
-      "300 lumen CREE LED spotlight",
-      "USB-C fast charging port",
-      "3 illumination modes"
+      "Soft black plush velvet fabric",
+      "Gold embroidered Naran crown logo",
+      "Dual drawstring tight closure"
     ],
     sizes: ["Standard"],
-    inventory: 3,
-    lowStockThreshold: 5,
-    status: "Critical"
-  },
-  {
-    id: "prod-7",
-    name: "NARAN All-Weather Dog Walking Jacket",
-    sku: "NR-APP-JKT",
-    category: "Apparel",
-    price: 79.99,
-    comparePrice: 99.99,
-    rating: 4.8,
-    reviewCount: 40,
-    images: [
-      "/product_jacket.jpg"
-    ],
-    description: "Waterproof windbreaker styled with dedicated magnet pockets for CleanWalk™ and accessories.",
-    features: [
-      "Gore-Tex windproof material",
-      "Reflective gold trim detailing",
-      "Integrated treat and waste bag dispenser"
-    ],
-    sizes: ["S", "M", "L", "XL"],
-    inventory: 32,
-    lowStockThreshold: 8,
+    inventory: 90,
+    lowStockThreshold: 15,
     status: "In Stock"
   },
   {
     id: "prod-8",
-    name: "CleanWalk™ Starter Bundle",
+    name: "NARAN PETCARE CleanWalk™ Starter Bundle (Full System)",
     sku: "CW-BNDL-01",
     category: "Bundles",
-    price: 99.99,
-    comparePrice: 129.99,
+    price: 119.99,
+    comparePrice: 149.99,
     rating: 5.0,
     reviewCount: 210,
     images: [
-      "/cleanwalk_hero.png",
-      "/cleanwalk_bags.png"
+      "/cleanwalk_real_gift_box.png",
+      "/cleanwalk_real_velvet_pouch.png"
     ],
-    description: "The complete package: CleanWalk™ Waste Catcher + 3-Pack Compostable Bags + Leather Leash.",
+    description: "The flagship luxury bundle: CleanWalk™ Waste Catcher + 60-Pack Refill Box + Velvet Travel Pouch + Luxury Gift Box.",
     features: [
       "Includes CleanWalk™ Catcher",
-      "180 refill bags included",
+      "60 Biodegradable Refill Bags Box",
+      "Velvet Carrying Travel Bag",
       "Save 25% compared to individual items"
     ],
     sizes: ["M", "L"],
@@ -343,7 +297,7 @@ export const initialSocialPosts = [
   {
     id: "post-1",
     caption: "Say goodbye to awkward dog walks. CleanWalk™ keeps your hands 100% waste-free and stylish. 🐾✨ #NaranPetcare #CleanWalk #DogTech",
-    image: "/cleanwalk_hero.png",
+    image: "/about_dog_main.jpg",
     platforms: ["Instagram", "Facebook", "TikTok"],
     status: "Published",
     publishedAt: "2026-09-04T12:00:00Z",
@@ -354,7 +308,7 @@ export const initialSocialPosts = [
   {
     id: "post-2",
     caption: "Tuscan handcrafted leather paired with aerospace alloy. Engineering elegance for your furry best friend.",
-    image: "/cleanwalk_product.png",
+    image: "/cleanwalk_packaging_box.png",
     platforms: ["Instagram", "X"],
     status: "Scheduled",
     scheduledFor: "2026-09-06T15:00:00Z",

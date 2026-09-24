@@ -45,9 +45,11 @@ export default function AdminLogin() {
         </button>
 
         <div className="text-center space-y-2 pt-2">
-          <div className="w-12 h-12 rounded-2xl bg-amber-400 text-black font-extrabold text-2xl flex items-center justify-center mx-auto shadow-lg shadow-amber-400/20">
-            N
-          </div>
+          <img
+            src="/naran_official_logo.png"
+            alt="NARAN PETCARE Official Logo"
+            className="w-24 h-24 object-contain mx-auto drop-shadow-[0_10px_20px_rgba(245,158,11,0.25)] hover:scale-105 transition-transform"
+          />
           <h1 className="text-2xl font-serif font-bold text-white tracking-tight">NARAN PETCARE</h1>
           <p className="text-xs text-amber-400 font-semibold uppercase tracking-widest">Admin Control Center</p>
         </div>

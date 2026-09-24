@@ -124,17 +124,11 @@ export default function AdminLayout() {
         {/* Brand Header */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-zinc-800/80">
           <Link to="/admin" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 flex items-center justify-center text-black font-black text-lg shadow-md shadow-amber-500/10">
-              N
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-extrabold tracking-wider text-white font-serif">
-                NARAN ADMIN
-              </span>
-              <span className="text-[9px] tracking-widest text-amber-400 font-semibold uppercase">
-                Control Center
-              </span>
-            </div>
+            <img
+              src="/naran_official_logo.png"
+              alt="NARAN ADMIN"
+              className="h-10 w-auto object-contain drop-shadow-[0_2px_8px_rgba(212,175,55,0.2)]"
+            />
           </Link>
         </div>
 
